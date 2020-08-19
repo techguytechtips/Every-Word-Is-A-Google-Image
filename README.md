@@ -21,3 +21,4 @@ To be able to use this Script, you need to enable Google Custom Search API, gene
 > python Every-Word-Is-A-Google-Image.py
 ```
 Enter the Artist Name and then the Song it will download all the images numbered in a folder called Images in the same directory.
+Google has a limit of 100 images per day. The program will automatically wait till the next day to continue downloading images.
