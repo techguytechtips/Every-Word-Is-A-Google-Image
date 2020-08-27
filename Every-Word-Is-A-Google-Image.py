@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz
 import os
 from shutil import copyfile
+from random import randint
 #TODO might be a better way of doing this later
 googletoken = open("GoogleToken.txt", "r").read().split()
 geniustoken = open("GeniusToken.txt", "r")
@@ -37,14 +38,22 @@ def ImgSearch():
     #Make a Index number that it can increase every time in the loop
     i = 0
     def GSearch():
-        gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
         try:
-            if str(open("ImageCache/" + str(i) + ".jpg",'rb').read(4)) != "b'\\xff\\xd8\\xff\\xe0'":
-                print("Image is corrupt, Using Backup")
-                copyfile("ImageCache/" + str(i) + "(1).jpg", "Images/" + str(i) + ".jpg" )
-                os.remove("ImageCache/" +  str(i) + ".jpg")
+            randomfile = randint(0,9) 
+            if randomfile == 0:
+                if str(open("ImageCache/" + str(i) + ".jpg",'rb').read(4)) != "b'\\xff\\xd8\\xff\\xe0'":
+                    print("Image is corrupt, Rerandomizing")
+                    os.remove("ImageCache/" +  str(i) + ".jpg")
+                    GSearch()
+                else:
+                    copyfile("ImageCache/" + str(i) + ".jpg", "Images/" + str(i) + ".jpg" )
             else:
-                copyfile("ImageCache/" + str(i) + ".jpg", "Images/" + str(i) + ".jpg" )
+                if str(open("ImageCache/" + str(i) + "(" + str(randomfile) + ")" + ".jpg",'rb').read(4)) != "b'\\xff\\xd8\\xff\\xe0'":
+                    print("Image is corrupt, Rerandomizing")
+                    os.remove("ImageCache/" +  str(i) + "(" + str(randomfile) + ")" + ".jpg")
+                    GSearch()
+                else:
+                    copyfile("ImageCache/" + str(i) + "(" + str(randomfile) + ")" + ".jpg", "Images/" + str(i) + ".jpg" )    
         except FileNotFoundError as fnfe:
             print(fnfe)
             GSearch()
@@ -57,7 +66,7 @@ def ImgSearch():
         'fileType': 'jpg',
         'imgType': 'photo',
         #How many images to Download per word (This will not effect how many words you can download until you pass 10 images.)
-        'num': 2,
+        'num': 10,
     }
     #TODO turn for loop into while loop for non wasted memory
     while i != len(songarray):
@@ -66,6 +75,7 @@ def ImgSearch():
         print("Now searching for Number " + str(i) + " " + songarray[i])
         #Search!
         try:
+            gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
             GSearch()
         except HttpError as e:
             print(e)
@@ -79,6 +89,7 @@ def ImgSearch():
                 time = datetime.now(pytz.timezone('US/Pacific')).strftime("%H:%M:%S")
                 if time == ("00:01:00"):
                     print("The Query Limit Has Reset, Continuing.")
+                    gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
                     GSearch()
                     break
         i += 1
