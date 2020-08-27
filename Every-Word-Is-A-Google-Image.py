@@ -24,7 +24,6 @@ def getLyrics():
         songarray = (song.lyrics).split()
     except AttributeError:
         print("Failed to retrieve lyrics. This is caused by a bug in the lyricsgenius library, please retry.")
-        raise AttributeError
     return songarray
         
 def ImgSearch():
