@@ -24,6 +24,8 @@ def getLyrics():
         songarray = (song.lyrics).split()
     except AttributeError:
         print("Failed to retrieve lyrics. This is caused by a bug in the lyricsgenius library, please retry.")
+        exit()
+    print(str(len(songarray)-1) + " Words")
     return songarray
         
 def ImgSearch():
@@ -33,7 +35,7 @@ def ImgSearch():
     if not os.path.exists("Images"):
         os.makedirs("Images")
     #Make a Index number that it can increase every time in the loop
-    i = 35
+    i = 0
     def GSearch():
         gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
         try:
@@ -58,7 +60,7 @@ def ImgSearch():
         'num': 2,
     }
     #TODO turn for loop into while loop for non wasted memory
-    for word in songarray:
+    while i != len(songarray):
         _search_params['q'] = songarray[i]
         #Tell user what word is being searched for 
         print("Now searching for Number " + str(i) + " " + songarray[i])
