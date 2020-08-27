@@ -20,7 +20,7 @@ def getLyrics():
     #Search for the song
     song = genius.search_song(songInput, artist.name)
     #Turn the Genius string into a array
-    try: 
+    try:
         songarray = (song.lyrics).split()
     except AttributeError:
         print("Failed to retrieve lyrics. This is caused by a bug in the lyricsgenius library, please retry.")
@@ -33,7 +33,7 @@ def ImgSearch():
     if not os.path.exists("Images"):
         os.makedirs("Images")
     #Make a Index number that it can increase every time in the loop
-    i = 0
+    i = 35
     def GSearch():
         gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
         try:
