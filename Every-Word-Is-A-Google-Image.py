@@ -16,10 +16,8 @@ def getLyrics():
     songInput = input("Please Enter Song: ")
     #Remove the Section Headers so it doesn't search it
     genius.remove_section_headers = True
-    #Search for the artists songs
-    artist = genius.search_artist(artistInput, max_songs=1, sort="title")
     #Search for the song
-    song = genius.search_song(songInput, artist.name)
+    song = genius.search_song(songInput, artistInput)
     #Turn the Genius string into a array
     try:
         songarray = (song.lyrics).split()
@@ -35,7 +33,7 @@ def ImgSearch():
         os.makedirs("ImageCache")
     if not os.path.exists("Images"):
         os.makedirs("Images")
-    #Make a Index number that it can increase every time in the loop
+    #Make a index number that it can increase every time in the loop
     i = 0
     def GSearch():
         try:
@@ -65,7 +63,7 @@ def ImgSearch():
         #Image Type
         'fileType': 'jpg',
         'imgType': 'photo',
-        #How many images to Download per word (This will not effect how many words you can download until you pass 10 images.)
+        #How many images to Download per word (This will not effect how many words you can download until you pass more then 10 images.)
         'num': 10,
     }
     #TODO turn for loop into while loop for non wasted memory
@@ -81,10 +79,8 @@ def ImgSearch():
             print(e)
             #The Quota Resets at 12:00 AM PST
             #Wait until 1 minute past 12:00 AM PST to continue 
-            print("Maximum ammount of queries reached.")
-            print("Waiting until 00:01:00 PST To Continue.")
-            #While loop to continuely check the time until it reaches the desired time
-            #TODO change While True
+            print("Maximum ammount of queries reached.\nWaiting until 00:01:00 PST To Continue.")
+            #continuously check the time until it reaches the desired time
             while True:
                 time = datetime.now(pytz.timezone('US/Pacific')).strftime("%H:%M:%S")
                 if time == ("00:01:00"):
