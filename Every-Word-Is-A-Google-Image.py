@@ -66,7 +66,6 @@ def ImgSearch():
         #How many images to Download per word (This will not effect how many words you can download until you pass more then 10 images.)
         'num': 10,
     }
-    #TODO turn for loop into while loop for non wasted memory
     while i != len(songarray):
         _search_params['q'] = songarray[i]
         #Tell user what word is being searched for 
