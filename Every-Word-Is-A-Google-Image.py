@@ -6,11 +6,18 @@ import pytz
 import os
 from shutil import copyfile
 from random import randint
+import argparse
 #TODO might be a better way of doing this later
 googletoken = open("GoogleToken.txt", "r").read().split()
 geniustoken = open("GeniusToken.txt", "r")
 gAPI = GoogleImagesSearch(googletoken[0], googletoken[1])
 genius = lyricsgenius.Genius(geniustoken.read())
+parser = argparse.ArgumentParser(
+    description="Automatically download a image for every word in a song"
+)
+parser.add_argument('-i',"--images",help="Amount of images it will randomly pick from", type=int, default=2)
+args = parser.parse_args()
+print()
 def getLyrics():
     artistInput = input("Please Enter Artist: ")
     songInput = input("Please Enter Song: ")
@@ -37,7 +44,7 @@ def ImgSearch():
     i = 0
     def GSearch():
         try:
-            randomfile = randint(0,9) 
+            randomfile = randint(0,args.images-1) 
             if randomfile == 0:
                 if str(open("ImageCache/" + str(i) + ".jpg",'rb').read(4)) != "b'\\xff\\xd8\\xff\\xe0'":
                     print("Image is corrupt, Rerandomizing")
@@ -64,7 +71,7 @@ def ImgSearch():
         'fileType': 'jpg',
         'imgType': 'photo',
         #How many images to Download per word (This will not effect how many words you can download until you pass more then 10 images.)
-        'num': 10,
+        'num': args.images,
     }
     while i != len(songarray):
         _search_params['q'] = songarray[i]
