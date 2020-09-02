@@ -12,12 +12,9 @@ googletoken = open("GoogleToken.txt", "r").read().split()
 geniustoken = open("GeniusToken.txt", "r")
 gAPI = GoogleImagesSearch(googletoken[0], googletoken[1])
 genius = lyricsgenius.Genius(geniustoken.read())
-parser = argparse.ArgumentParser(
-    description="Automatically download a image for every word in a song"
-)
+parser = argparse.ArgumentParser(description="Automatically download a image for every word in a song")
 parser.add_argument('-i',"--images",help="Amount of images it will randomly pick from", type=int, default=2)
 args = parser.parse_args()
-print()
 def getLyrics():
     artistInput = input("Please Enter Artist: ")
     songInput = input("Please Enter Song: ")
