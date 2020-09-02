@@ -14,6 +14,7 @@ gAPI = GoogleImagesSearch(googletoken[0], googletoken[1])
 genius = lyricsgenius.Genius(geniustoken.read())
 parser = argparse.ArgumentParser(description="Automatically download a image for every word in a song")
 parser.add_argument('-i',"--images",help="Amount of images it will randomly pick from", type=int, default=2)
+parser.add_argument('-w',"--word",help="What word it will start from in the list of words", type=int, default=0)
 args = parser.parse_args()
 def getLyrics():
     artistInput = input("Please Enter Artist: ")
@@ -38,7 +39,7 @@ def ImgSearch():
     if not os.path.exists("Images"):
         os.makedirs("Images")
     #Make a index number that it can increase every time in the loop
-    i = 0
+    i = args.word
     def GSearch():
         try:
             randomfile = randint(0,args.images-1) 
