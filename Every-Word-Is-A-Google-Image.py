@@ -60,6 +60,7 @@ def ImgSearch():
         except FileNotFoundError as fnfe:
             print(fnfe)
             GSearch()
+    
             
     #Google Image Search Parameters
     _search_params = {
@@ -77,7 +78,7 @@ def ImgSearch():
         print("Now searching for Number " + str(i) + " " + songarray[i])
         #Search!
         try:
-            gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
+            gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i), width=500, height=500)
             GSearch()
         except HttpError as e:
             print(e)
@@ -89,7 +90,7 @@ def ImgSearch():
                 time = datetime.now(pytz.timezone('US/Pacific')).strftime("%H:%M:%S")
                 if time == ("00:01:00"):
                     print("The Query Limit Has Reset, Continuing.")
-                    gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i))
+                    gAPI.search(search_params=_search_params, path_to_dir="ImageCache", custom_image_name=str(i), width=500, height=500)
                     GSearch()
                     break
         i += 1
